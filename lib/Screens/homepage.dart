@@ -2,17 +2,17 @@ import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:binarynumbers/Auth/login.dart';
-import 'package:binarynumbers/Screens/post.dart';
+import 'package:binarynumbers/Screens/movie_detailed.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;  
-import 'dart:async';  
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 import 'dart:convert';
-import 'model.dart';
-import 'package:http/http.dart';  
-  
 
+import 'package:http/http.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,41 +29,28 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Color selectedButtoncolor = Color.fromRGBO(242, 0, 74, 1);
 
+  late Future<Post> post;
 
+  @override
+  void initState() {
+    super.initState();
+    post = fetchPost();
+  }
 
-  
+  var postData = [];
 
-late Future<Post> post;  
+  Future<Post> fetchPost() async {
+    final response = await http
+        .get('http://www.omdbapi.com/?i=tt3896198&apikey=c4033450&s=Movies');
 
-  @override  
-  void initState() {  
-    super.initState();  
-    
-    post = fetchPost();  
-  }  
-  var postData =[];
+    if (response.statusCode == 200) {
+      return Post.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
 
-
-Future<Post> fetchPost() async {  
-  final response = await http.get('http://www.omdbapi.com/?i=tt3896198&apikey=c4033450&s=Movies');  
-  
-  if (response.statusCode == 200) {  
-    // If the call to the server was successful (returns OK), parse the JSON.  
-    // print(response.body);
-    // json = response.body;
-     
-    return Post.fromJson(json.decode(response.body));  
-   
-  } else {  
-    // If that call was not successful (response was unexpected), it throw an error.  
-    throw Exception('Failed to load post');  
-  }  
-}  
-  
-  
-
-  // TabController _tabController = TabController(length: 2);
-  Widget callPages(int _page) {
+  callPages(int _page) {
     switch (_selectedIndex) {
       case 0:
         return Container(child: homePage());
@@ -73,18 +60,13 @@ Future<Post> fetchPost() async {
 
       case 2:
         return Container(child: bookmark());
-      case 3:
-        return Container(child: menu());
-
-      default:
-        return Container();
     }
   }
 
   Widget callButtonPages(int _page) {
     switch (_page) {
       case 1:
-        return Container(child: button1());
+        return Center(child: Container(child: button1()));
       case 2:
         return Container(child: button2());
       case 3:
@@ -96,10 +78,11 @@ Future<Post> fetchPost() async {
   }
 
   Widget button1() {
-    print('hehe');
-    return Text(
-      'Movies',
-      style: TextStyle(color: Colors.white),
+    return Center(
+      child: Text(
+        'This is Movies page',
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 
@@ -116,58 +99,27 @@ Future<Post> fetchPost() async {
               Text(
                 'NEW',
                 style: TextStyle(
-                    color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
               ),
-              Container(height: 300, child: horizontalList1),
+              Container(height: 300, child: horizontalList('NEW')),
               Text(
                 'POPULAR',
                 style: TextStyle(
-                    color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
               ),
-              Center(  
-              child: FutureBuilder<Post>(  
-                future: post,  
-                builder: (context, abc) {  
-                  if (abc.hasData) {  
-                    return   Stack(
-              alignment: Alignment.center,
-              children: [
-                Card(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  elevation: 5,
-                  child: Container(
-                    width: 150.0,
-                    color: Colors.red,
-                    child: Image.network(abc.data!.title),
-                  ),
-                ),
-                Positioned(
-                    top: 235,
-                    child: Container(
-                      width: 65,
-                      height: 23,
-                      color: Color.fromRGBO(2, 222, 22, 1),
-                      child: Center(
-                          child: Text(
-                        'NEW',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ))
-              ],
-            );
-                  } else if (abc.hasError) {  
-                    return Text("${abc.error}",style: TextStyle(
-                    color: Colors.white));
-                  }  
-          
-                  // By default, it show a loading spinner.  
-                  return CircularProgressIndicator();  
-                },  
-              ),  
-            ),  
+              Container(height: 300, child: horizontalList('POPULAR')),
+              Text(
+                'TRENDING',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
+              ),
+              Container(height: 300, child: horizontalList('TRENDING')),
             ],
           ),
         ),
@@ -175,89 +127,79 @@ Future<Post> fetchPost() async {
     );
   }
 
-  Widget horizontalList1 = new Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      height: 220.0,
-      child: new ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Card(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                elevation: 5,
-                child: Container(
-                  width: 150.0,
-                  color: Colors.red,
-                ),
-              ),
-              Positioned(
-                  top: 235,
-                  child: Container(
-                    width: 65,
-                    height: 23,
-                    color: Color.fromRGBO(2, 222, 22, 1),
-                    child: Center(
-                        child: Text(
-                      'NEW',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    )),
-                  ))
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-             Stack(
-            alignment: Alignment.center,
-            children: [
-              Card(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                elevation: 5,
-                child: Container(
-                  width: 150.0,
-                  color: Colors.red,
-                ),
-              ),
-              Positioned(
-                  top: 235,
-                  child: Container(
-                    width: 65,
-                    height: 23,
-                    color: Color.fromRGBO(2, 222, 22, 1),
-                    child: Center(
-                        child: Text(
-                      'NEW',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    )),
-                  ))
-            ],
-          ),
-          Container(
-            width: 160.0,
-            color: Colors.orange,
-          ),
-          Container(
-            width: 160.0,
-            color: Colors.pink,
-          ),
-          Container(
-            width: 160.0,
-            color: Colors.yellow,
-          ),
-        ],
-      ));
+  Widget horizontalList(String tag) {
+    return new Container(
+      //   margin: EdgeInsets.symmetric(vertical: 10),
+      height: 300.0,
+      child: FutureBuilder<Post>(
+        future: post,
+        builder: (context, abc) {
+          if (abc.hasData) {
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: abc.data!.data.length,
+                itemBuilder: (BuildContext context, int i) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Movie_Detail(abc.data!.data[i])));
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 160,
+                            height: 250,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: FittedBox(
+                                child:
+                                    Image.network(abc.data!.data[i]['Poster']),
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              top: 262,
+                              child: Container(
+                                width: 65,
+                                height: 23,
+                                color: Color.fromRGBO(2, 222, 22, 1),
+                                child: Center(
+                                    child: Text(
+                                  '$tag',
+                                  style: TextStyle(
+                                      fontSize: tag != 'NEW' ? 13 : 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ))
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          } else if (abc.hasError) {
+            return Text("${abc.error}", style: TextStyle(color: Colors.white));
+          }
+
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
+  }
+
   Widget button3() {
-    return Text(
-      'Music',
-      style: TextStyle(color: Colors.white),
+    return Center(
+      child: Text(
+        'This is Music Page',
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 
@@ -280,7 +222,7 @@ Future<Post> fetchPost() async {
                   SizedBox(
                     width: 15,
                   ),
-                  Text('Mihir Daka',
+                  Text('${_auth.currentUser.displayName ?? 'user'}',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -290,18 +232,24 @@ Future<Post> fetchPost() async {
                   width: 100,
                   height: 40,
                   child: TextFormField(
+                    
                     decoration: InputDecoration(
+                      hintText: 'Search',
+                        
+                        enabledBorder: new UnderlineInputBorder(
+                            borderSide: new BorderSide(
+                                color: Color.fromRGBO(23, 23, 23, 1))),
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.grey,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.black26,
+                          color: Colors.white,
+                          //fontSize: 15
                         ),
                         filled: true,
                         fillColor: Color.fromRGBO(23, 23, 23, 1),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 0.0, vertical: 0.0)),
+                    ),
                   ),
                 ),
               ],
@@ -350,7 +298,6 @@ Future<Post> fetchPost() async {
                         // FirebaseAuth.instance.signOut();
                         setState(() {
                           selectedButton = 2;
-
                           selbutton2 = true;
                           selbutton1 = false;
                           selbutton3 = false;
@@ -399,20 +346,24 @@ Future<Post> fetchPost() async {
   }
 
   Widget fav() {
-    return Text(
-      'Index 1: Business',
-      style: TextStyle(color: Colors.white),
+    return Center(
+      child: Text(
+        'Favourite Tab',
+        style: TextStyle(color: Colors.white),
 
-      //style: optionStyle,
+        //style: optionStyle,
+      ),
     );
   }
 
   Widget bookmark() {
-    return Text(
-      'Index 2: School',
-      style: TextStyle(color: Colors.white),
+    return Center(
+      child: Text(
+        'Bookmark Tab',
+        style: TextStyle(color: Colors.white),
 
-      // style: optionStyle,
+        // style: optionStyle,
+      ),
     );
   }
 
@@ -422,9 +373,9 @@ Future<Post> fetchPost() async {
           child: RaisedButton(
         color: Colors.red,
         onPressed: () {
-          Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Rest()));
+          _auth.signOut();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
         },
         child: Text(
           'Logout',
@@ -437,14 +388,55 @@ Future<Post> fetchPost() async {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
+  
+    if (index == 3) {
+      
+      _key.currentState!.openEndDrawer();
+    }else{
+        setState(() {
       _selectedIndex = index;
     });
+    }
   }
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      endDrawer: new Drawer(
+        child: new ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'BinaryNumbers\nDrawer\n\n-Mihir Daka',
+                style: TextStyle(fontSize: 20),
+              ),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(11, 11, 11, 0.9),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                _auth.signOut();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.close),
+              title: Text('Close'),
+              onTap: () {
+                Navigator.pop(context);
+                //_key.currentState!.();
+              },
+            )
+          ],
+        ),
+      ),
       backgroundColor: Colors.black,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -457,8 +449,7 @@ Future<Post> fetchPost() async {
         selectedItemColor: Color.fromRGBO(242, 0, 74, 1),
         unselectedItemColor: Color.fromRGBO(64, 64, 64, 1),
         iconSize: 30,
-        currentIndex:
-            _selectedIndex, // this will be set when a new tab is tapped
+        currentIndex: _selectedIndex,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: new Icon(Icons.home),
@@ -497,21 +488,15 @@ Future<Post> fetchPost() async {
   }
 }
 
-class Post {  
-  final String userId;  
-  
-  final String title;  
-  final String description;  
-  
-  Post({required this.userId, required this.title, required this.description});  
-  
-  factory Post.fromJson(Map<String, dynamic> json) {  
-    
-    return Post(  
-      
-      userId: json['Search'][0]['Year'],
-      title: json['Search'][0]['Poster'],  
-      description: json['Search'][0]['Type'],  
-    );  
-  }  
-}  
+class Post {
+  final data;
+
+  Post({required this.data});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    print(json['Search']);
+    return Post(
+      data: json['Search'],
+    );
+  }
+}

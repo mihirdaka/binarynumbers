@@ -124,10 +124,12 @@ class _SignupPageState extends State<SignupPage> {
                            controller: _name,
                           //validator: emailValidator,
                           keyboardType: TextInputType.name,
+                            style: TextStyle(color: Colors.black87),
+
                           decoration: InputDecoration(
                               
                               prefixIcon: Icon(
-                                Icons.email,
+                                Icons.person,
                                 color: Colors.black26,
                               ),
                               
@@ -151,6 +153,8 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
                         child: TextFormField(
+                            style: TextStyle(color: Colors.black87),
+
                           controller: _emailAddress,
                           validator: (value) {
                             String pattern =
@@ -188,6 +192,8 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
                         child: TextFormField(
+                            style: TextStyle(color: Colors.black87),
+
                           controller: _password,
                           validator: (value) {
                             if (value!.length < 7) {

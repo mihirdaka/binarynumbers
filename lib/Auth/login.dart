@@ -131,18 +131,21 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40))),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black87),
                             controller: _emailAddress,
                             //validator: emailValidator,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.email,
-                                  color: Colors.black26,
+                                  color: Colors.black54,
                                 ),
                                 hintText: "Email",
-                                hintStyle: TextStyle(color: Colors.black26),
+                                hintStyle: TextStyle(color: Colors.black54),
                                 filled: true,
                                 fillColor: Colors.white,
+                                
+                                
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius:
@@ -162,15 +165,18 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _password,
                             //  validator: passwordValidator,
                             obscureText: _hidePassword,
+                            style: TextStyle(color: Colors.black87),
+                            
                             decoration: InputDecoration(
+                              
                                 prefixIcon: Icon(
                                   Icons.lock,
-                                  color: Colors.black26,
+                                  color: Colors.black54,
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.remove_red_eye),
                                   color: _hidePassword
-                                      ? Colors.black26
+                                      ? Colors.black54
                                       : Colors.blue,
                                   onPressed: () {
                                     passwordPeak();
@@ -178,10 +184,11 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 hintText: "Password",
                                 hintStyle: TextStyle(
-                                  color: Colors.black26,
+                                  color: Colors.black54,
                                 ),
                                 filled: true,
                                 fillColor: Colors.white,
+                              
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius:

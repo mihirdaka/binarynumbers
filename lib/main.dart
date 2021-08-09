@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       
       title: 'BinaryNumbers',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: "ProductSans"),
+      theme: ThemeData(fontFamily: "ProductSans",brightness: Brightness.dark,),
       home: isUserLoggedIn != null
           ? isUserLoggedIn == true? 
           HomePage()
