@@ -179,19 +179,31 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Positioned(
-                              top: 237,
-                              child: Container(
-                                width: 55,
-                                height: 26,
-                                color: Color.fromRGBO(0, 180, 0, 1),
-                                child: Center(
-                                    child: Text(
-                                  '$tag',
-                                  style: TextStyle(
-                                      fontSize: tag != 'NEW' ? 11 : 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                              top: 240,
+                              child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2),
+
+                                child: Container(
+                                  
+                                 // width: 55,
+                                 // height: 26,
+                                 // margin: EdgeInsets.fromLTRB(5, 8, 5, 8),
+                                  
+                                  color: Color.fromRGBO(0, 180, 0, 1),
+                                  child: Center(
+                                    
+                                      child: Container(
+                                        margin: EdgeInsets.fromLTRB(5, 3, 5, 3),
+                              
+                                        child: Text(
+                                    '$tag',
+                                    style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                  ),
+                                      )),
+                                ),
                               ))
                         ],
                       ),
