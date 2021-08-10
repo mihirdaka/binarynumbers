@@ -75,27 +75,16 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-          child: Container(
+      body:Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 40.0,
-                ),
-                CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.blueGrey,
-                  child: Text("Logo here"),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
+              
                 Text(
-                  "Signup",
+                  "SIGN UP",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -110,9 +99,6 @@ class _SignupPageState extends State<SignupPage> {
                       Card(
                         margin: EdgeInsets.only(left: 30, right: 30, top: 30),
                         elevation: 11,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40))),
                         child: TextFormField(
                             validator: (value) {
                             if (value!.length < 3) {
@@ -130,18 +116,16 @@ class _SignupPageState extends State<SignupPage> {
                               
                               prefixIcon: Icon(
                                 Icons.person,
-                                color: Colors.black26,
+                                color: Colors.black54,
                               ),
                               
                               hintText: "Name",
-                              hintStyle: TextStyle(color: Colors.black26),
+                              hintStyle: TextStyle(color: Colors.black54),
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40.0)),
-                              ),
+                                 ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 16.0)),
                         ),
@@ -149,9 +133,6 @@ class _SignupPageState extends State<SignupPage> {
                       Card(
                         margin: EdgeInsets.only(left: 30, right: 30, top: 20),
                         elevation: 11,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40))),
                         child: TextFormField(
                             style: TextStyle(color: Colors.black87),
 
@@ -170,17 +151,15 @@ class _SignupPageState extends State<SignupPage> {
                           decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.email,
-                                color: Colors.black26,
+                                color: Colors.black54,
                               ),
                               hintText: "Email",
-                              hintStyle: TextStyle(color: Colors.black26),
+                              hintStyle: TextStyle(color: Colors.black54),
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40.0)),
-                              ),
+                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 16.0)),
                         ),
@@ -188,10 +167,7 @@ class _SignupPageState extends State<SignupPage> {
                       Card(
                         margin: EdgeInsets.only(left: 30, right: 30, top: 20),
                         elevation: 11,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40))),
-                        child: TextFormField(
+                         child: TextFormField(
                             style: TextStyle(color: Colors.black87),
 
                           controller: _password,
@@ -206,26 +182,24 @@ class _SignupPageState extends State<SignupPage> {
                           decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.lock,
-                                color: Colors.black26,
+                                color: Colors.black54,
                               ),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.remove_red_eye),
                                 color:
-                                    _hidePassword ? Colors.black26 : Colors.red,
+                                    _hidePassword ? Colors.black54 : Colors.red,
                                 onPressed: () {
                                   passwordPeak();
                                 },
                               ),
                               hintText: "Password",
                               hintStyle: TextStyle(
-                                color: Colors.black26,
+                                color: Colors.black54,
                               ),
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40.0)),
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 16.0)),
@@ -234,62 +208,59 @@ class _SignupPageState extends State<SignupPage> {
                       SizedBox(
                         height: 30.0,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Signup();
-                        },
-                        child: Container(
-                          width: 300,
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          //margin: EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Center(
-                            child: isLoading?CircularProgressIndicator(color: Colors.white):Text("Signup",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18.0)),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: MaterialButton(
+                            onPressed: () {
+                              Signup();
+                            },
+                            height: 50,
+                            color: Color.fromRGBO(250, 0, 50, 0.9),
+                            child: Center(
+                              child: isLoading
+                                  ? CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text("SIGN UP",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15.0)),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
+                     
+                    
                     ],
                   ),
                 ),
               ],
             ),
-            Column(
-              children: [
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already registered?",
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
+             Padding(
+                
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                child:
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()));
-                        },
-                        child: Text(
-                          "Login",
-                          style: TextStyle(fontSize: 15),
-                        ))
-                  ],
-                ),
-                Divider(),
-              ],
-            )
-          ],
+                          },
+                          child: Text(
+                            "Already have an account? Sign in.",
+                            style: TextStyle(
+                                fontSize: 14, color: Color.fromRGBO(250, 0, 50, 0.9)),
+                          ),
+                        ),
+                      ],
+                    )
+                 
+              ),
+         ],
         ),
-      )),
+      ),
     );
   }
 }

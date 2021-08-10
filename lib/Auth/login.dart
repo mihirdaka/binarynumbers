@@ -95,41 +95,26 @@ class _LoginPageState extends State<LoginPage> {
           child: Container(
               // color: Colors.black,
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.blueGrey,
-                    child: Text("Logo here"),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
                   Text(
-                    "Login",
+                    "LOGIN",
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         letterSpacing: 1.0),
                   ),
                   Form(
                     key: _loginKey,
                     child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Card(
-                          margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                          margin: EdgeInsets.only(left: 30, right: 30, top: 50),
                           elevation: 11,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(40))),
                           child: TextFormField(
                             style: TextStyle(color: Colors.black87),
                             controller: _emailAddress,
@@ -144,12 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                                 hintStyle: TextStyle(color: Colors.black54),
                                 filled: true,
                                 fillColor: Colors.white,
-                                
-                                
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 16.0)),
@@ -158,17 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                         Card(
                           margin: EdgeInsets.only(left: 30, right: 30, top: 20),
                           elevation: 11,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(40))),
                           child: TextFormField(
                             controller: _password,
-                            //  validator: passwordValidator,
                             obscureText: _hidePassword,
                             style: TextStyle(color: Colors.black87),
-                            
                             decoration: InputDecoration(
-                              
                                 prefixIcon: Icon(
                                   Icons.lock,
                                   color: Colors.black54,
@@ -188,11 +163,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 filled: true,
                                 fillColor: Colors.white,
-                              
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40.0)),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 16.0)),
@@ -201,48 +173,39 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 30.0,
                         ),
-                        InkWell(
-                          onTap: () {
-                            logIn();
-                          },
-                          child: Container(
-                            width: 300,
-                            height: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
-                            //margin: EdgeInsets.symmetric(horizontal: 25.0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: MaterialButton(
+                            onPressed: () {
+                              logIn();
+                            },
+                            height: 50,
+                            color: Color.fromRGBO(250, 0, 50, 0.9),
                             child: Center(
                               child: isLoading
                                   ? CircularProgressIndicator(
                                       color: Colors.white,
                                     )
-                                  : Text("Login",
+                                  : Text("LOGIN",
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 18.0)),
+                                          color: Colors.white, fontSize: 15.0)),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
+                       
                       ],
                     ),
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Are you a new customer?",
-                        style: TextStyle(fontSize: 14, color: Colors.white),
-                      ),
-                      TextButton(
+              Padding(
+                
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                child:
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TextButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -250,14 +213,15 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) => SignupPage()));
                           },
                           child: Text(
-                            "Sign up",
-                            style: TextStyle(fontSize: 15),
-                          ))
-                    ],
-                  ),
-                  Divider(),
-                ],
-              )
+                            "Don't have an account? Sign up.",
+                            style: TextStyle(
+                                fontSize: 14, color: Color.fromRGBO(250, 0, 50, 0.9)),
+                          ),
+                        ),
+                      ],
+                    )
+                 
+              ),
             ],
           )),
         ));

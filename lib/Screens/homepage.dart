@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
   Widget button2() {
     return Flexible(
       child: Container(
-        padding: EdgeInsets.fromLTRB(15, 30, 0, 0),
+        padding: EdgeInsets.fromLTRB(15, 45, 0, 0),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           child: Column(
@@ -103,7 +103,13 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              Container(height: 300, child: horizontalList('NEW')),
+              SizedBox(
+                height: 15,
+              ),
+              Container(height: 275, child: horizontalList('NEW')),
+              SizedBox(
+                height: 15,
+              ),
               Text(
                 'POPULAR',
                 style: TextStyle(
@@ -111,7 +117,13 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              Container(height: 300, child: horizontalList('POPULAR')),
+              SizedBox(
+                height: 15,
+              ),
+              Container(height: 275, child: horizontalList('POPULAR')),
+              SizedBox(
+                height: 15,
+              ),
               Text(
                 'TRENDING',
                 style: TextStyle(
@@ -119,7 +131,10 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              Container(height: 300, child: horizontalList('TRENDING')),
+              SizedBox(
+                height: 15,
+              ),
+              Container(height: 275, child: horizontalList('TRENDING')),
             ],
           ),
         ),
@@ -129,8 +144,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget horizontalList(String tag) {
     return new Container(
-      //   margin: EdgeInsets.symmetric(vertical: 10),
-      height: 300.0,
+      height: 275.0,
       child: FutureBuilder<Post>(
         future: post,
         builder: (context, abc) {
@@ -150,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                     Movie_Detail(abc.data!.data[i])));
                       },
                       child: Stack(
-                        alignment: Alignment.center,
+                        alignment: Alignment.topCenter,
                         children: [
                           Container(
                             width: 160,
@@ -165,16 +179,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Positioned(
-                              top: 262,
+                              top: 237,
                               child: Container(
-                                width: 65,
-                                height: 23,
-                                color: Color.fromRGBO(2, 222, 22, 1),
+                                width: 55,
+                                height: 26,
+                                color: Color.fromRGBO(0, 180, 0, 1),
                                 child: Center(
                                     child: Text(
                                   '$tag',
                                   style: TextStyle(
-                                      fontSize: tag != 'NEW' ? 13 : 18,
+                                      fontSize: tag != 'NEW' ? 11 : 14,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 )),
@@ -210,32 +224,36 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.blueGrey,
-                    backgroundImage: NetworkImage(
-                        'https://pbs.twimg.com/profile_images/1396531437067636737/r0TT66tz_400x400.jpg'),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text('${_auth.currentUser.displayName ?? 'user'}',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                ]),
-                Container(
-                  width: 100,
-                  height: 40,
-                  child: TextFormField(
-                    
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                        
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  child: Row(children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.blueGrey,
+                      backgroundImage: NetworkImage(
+                          'https://pbs.twimg.com/profile_images/1396531437067636737/r0TT66tz_400x400.jpg'),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text('${_auth.currentUser.displayName ?? 'user'}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                  ]),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    width: 130,
+                    height: 40,
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.grey),
+                      decoration: InputDecoration(
+                        hintText: 'Search',
                         enabledBorder: new UnderlineInputBorder(
                             borderSide: new BorderSide(
                                 color: Color.fromRGBO(23, 23, 23, 1))),
@@ -244,11 +262,13 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.grey,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.white,
-                          //fontSize: 15
+                          color: Colors.grey,
+                          //fontSize: 16
                         ),
+                        border: InputBorder.none,
                         filled: true,
                         fillColor: Color.fromRGBO(23, 23, 23, 1),
+                      ),
                     ),
                   ),
                 ),
@@ -261,6 +281,14 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: selbutton1
+                            ? Color.fromRGBO(242, 0, 74, 0.9)
+                            : Colors.transparent,
+                        blurRadius: selbutton1 ? 20.0 : 0,
+                      ),
+                    ]),
                     height: selbutton1 ? 45 : 35,
                     width: selbutton1 ? 120 : 90,
                     child: RaisedButton(
@@ -281,10 +309,19 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Text(
                         'Movies',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: selbutton1 ? Colors.white : Colors.grey),
                       ),
                     )),
                 Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: selbutton2
+                            ? Color.fromRGBO(242, 0, 74, 0.9)
+                            : Colors.transparent,
+                        blurRadius: selbutton2 ? 20.0 : 0,
+                      ),
+                    ]),
                     height: selbutton2 ? 45 : 35,
                     width: selbutton2 ? 120 : 90,
                     child: RaisedButton(
@@ -305,10 +342,19 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Text(
                         'Shows',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: selbutton2 ? Colors.white : Colors.grey),
                       ),
                     )),
                 Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: selbutton3
+                            ? Color.fromRGBO(242, 0, 74, 0.9)
+                            : Colors.transparent,
+                        blurRadius: selbutton3 ? 20.0 : 0,
+                      ),
+                    ]),
                     height: selbutton3 ? 45 : 35,
                     width: selbutton3 ? 120 : 90,
                     child: RaisedButton(
@@ -322,7 +368,6 @@ class _HomePageState extends State<HomePage> {
                         // FirebaseAuth.instance.signOut();
                         setState(() {
                           selectedButton = 3;
-
                           selbutton3 = true;
                           selbutton2 = false;
                           selbutton1 = false;
@@ -330,7 +375,8 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Text(
                         'Music',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: selbutton3 ? Colors.white : Colors.grey),
                       ),
                     ))
               ],
@@ -388,14 +434,12 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-  
     if (index == 3) {
-      
       _key.currentState!.openEndDrawer();
-    }else{
-        setState(() {
-      _selectedIndex = index;
-    });
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
     }
   }
 
